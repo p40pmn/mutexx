@@ -31,6 +31,9 @@ func main() {
 	defer db.Close()
 
 	e := echo.New()
+	atdSvc := New(db)
+	h := &handler{svc: atdSvc}
+	e.POST("/attendees", h.Create)
 
 	errCh := make(chan error, 1)
 	go func() {
